@@ -1,0 +1,86 @@
+main {
+    text-align: left;
+}
+
+section {
+    background-color: white;
+    padding: 30px;
+    margin: 50px;
+    border: 2px solid #d7d7d7;
+    border-radius: 10px;
+}
+
+.endpoint {
+    display: flex;
+}
+
+.get {
+    background-color: #2cba1338;
+    padding: 10px;
+}
+
+.get span {
+    color: #349712;
+}
+
+.post {
+    background-color: #ba7d1338;
+    padding: 10px;
+}
+
+.post span {
+    color: #d68800;
+}
+
+.code {
+    position: relative;
+}
+
+.code button {
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    margin: 5px; 
+    padding: 5px 10px; 
+    font-size: 0.8em;
+}
+
+pre {
+    font-family: 'JetBrains Mono', monospace;
+    background-color: #f4f4f4;
+    padding: 5px;
+    line-height: 1.2;
+}
+
+details {
+    margin: 10px;
+    margin-top: 30px;
+}
+
+details p {
+    margin: 10px;
+}
+
+details p code {
+    background-color: #f4f4f4;
+    padding: 2px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+summary {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #b6b6b6;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #fff7db;
+}

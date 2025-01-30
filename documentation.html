@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>thepixelsapi</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="pixel.svg">
+
+    <style>
+        * {
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        body {
+            background-color: #fff7db;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin: 1.2em;
+        }
+
+        img {
+            width: 800px;
+            height: 400px;
+            background-color: white;
+            border: 5px solid black;
+        }
+
+        button {
+            font-size: 1.2em;
+            border: 2px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #fdfdfd;
+        }
+    </style>
+    <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+    <h1>Pixels Documentation</h1>
+    <h3>maybe when i host this :3</h3>
+
+    <main>
+        <section>
+            <div class="endpoint get">
+                <span>GET</span>
+                <h2>/image</h2>
+            </div>
+            <p>Gets the image of the current pixel canvas.</p>
+        </section>
+
+
+        <section>
+            <div class="endpoint get">
+                <span>GET</span>
+                <h2>/pixeldata</h2>
+            </div>
+            <p>Returns pixel data of single pixel like color and last modified time.</p>
+            <details>
+                <summary>Example</summary>
+                <p><code>.../pixeldata?x=0&y=0</code> will return:</p>
+                <div class="code">
+                    <pre>
+{
+    "color": "#ffffff",
+    "timeCreated": "2025-01-29T15:55:45.39355+00:00"
+}
+                    </pre>
+                </div>
+            </details>
+        </section>
+
+        <section>
+            <div class="endpoint get">
+                <span>GET</span>
+                <h2>/pixels</h2>
+            </div>
+            <p>Returns all data for pixels. Define x, y or color parameters to filter.</p>
+        </section>
+
+        <section>
+            <div class="endpoint post">
+                <span>POST</span>
+                <h2>/setpixel</h2>
+            </div>
+            <p>Set a pixel to a color, for example:</p>
+            <div class="code">
+                <pre>
+{
+    "x": 0,
+    "y": 0,
+    "color": "#ff0000" // must be hex
+}
+                </pre>
+                <button onclick="copyCode()">
+                    Copy
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function copyCode() {
+            navigator.clipboard.writeText("{\n    \"x\": 0,\n    \"y\": 0,\n    \"color\": \"#ff0000\"\n}");
+        }
+    </script>
+</body>
+</html>
