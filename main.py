@@ -80,8 +80,8 @@ def set_pixel():
     if x < 0 or x > 31 or y < 0 or y > 15:
         return jsonify({"message": "Invalid coordinates"}), 400
 
-    supabase.from_('pixels').update({'color': color}).eq('x', x).eq('y', y)
-    supabase.from_('pixels').update({'timeCreated': 'now()'}).eq('x', x).eq('y', y)
+    supabase.from_('pixels').update({'color': color}).eq('x', x).eq('y', y).execute()
+    supabase.from_('pixels').update({'timeCreated': 'now()'}).eq('x', x).eq('y', y).execute()
     
     return jsonify({"message": "The pixel is set!"}), 200
 
