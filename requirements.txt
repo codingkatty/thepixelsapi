@@ -1,4 +1,4 @@
-Flask==2.1.1
-flask-cors==3.0.10
-supabase==0.1.6
-Pillow==9.0.1
+Flask
+flask-cors
+supabase
+Pillow
