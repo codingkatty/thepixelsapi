@@ -56,8 +56,8 @@
         let status = document.getElementById('status');
 
         function updateImage() {
-            image.src = "http://192.168.0.170:5000/image";
-            fetch('http://192.168.0.170:5000')
+            image.src = "https://thepixelsapi.onrender.com/image";
+            fetch('https://thepixelsapi.onrender.com')
                 .then(response => {
                     status.style.color = "#349712";
                     status.innerText = "server online";
