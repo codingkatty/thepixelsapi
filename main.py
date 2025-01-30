@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 supabase_url = "https://msfutgjgflgkckxreksp.supabase.co"
-supabase_key = os.environ.get('SUPABASE_KEY')
+supabase_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1zZnV0Z2pnZmxna2NreHJla3NwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMwMTk1NDEsImV4cCI6MjA0ODU5NTU0MX0.pIQlsN43fHNmB1MCjONz6jomwz3x3vdgfGyfSlmWw_U"
 supabase: Client = create_client(supabase_url, supabase_key)
 
 @app.route('/image', methods=['GET'])
@@ -31,42 +31,32 @@ def get_image():
     img_io.seek(0)
     return send_file(img_io, mimetype='image/png')
 
-# pixels: take in x y and returns color and last modified of pixel
-@app.route('/pixeldata', methods=['GET'])
-def get_pixel():
-    x = request.args.get('x')
-    y = request.args.get('y')
+@app.route('/trending', methods=['GET'])
+def get_trending_color():
+    query = supabase.from_('pixels').select('color').execute()
+    colors = [pixel['color'] for pixel in query.data]
 
-    if not x or not y:
-        return jsonify({"message": "Invalid parameters"}), 400
-
-    color_response = supabase.from_('pixels').select('color').eq('x', x).eq('y', y).single().execute()
-    time_created_response = supabase.from_('pixels').select('timeCreated').eq('x', x).eq('y', y).single().execute()
-
-    if color_response.data and time_created_response.data:
-        color = color_response.data['color']
-        time_created = time_created_response.data['timeCreated']
-        return jsonify({"color": color, "timeCreated": time_created}), 200
-    else:
-        return jsonify({"message": "Pixel not found"}), 404
+    trending_color = max(set(colors), key = colors.count)
+    count = colors.count(trending_color)
+    
+    return jsonify({"trending": trending_color, "count": count}), 200
 
 @app.route('/pixels', methods=['GET'])
 def get_pixels():
     query = supabase.from_('pixels').select('*')
     
-    x = request.args.get('x')
-    y = request.args.get('y')
-    color = request.args.get('color')
+    x = request.args.getlist('x')
+    y = request.args.getlist('y')
+    color = request.args.getlist('color')
+
+    color = ['#' + c.lstrip('#') for c in color] 
     
     if x:
-        query = query.eq('x', x)
-
+        query = query.in_('x', x)
     if y:
-        query = query.eq('y', y)
-
+        query = query.in_('y', y)
     if color:
-        query = query.eq('color', color)
-
+        query = query.in_('color', color)
     
     pixels = query.execute()
     return jsonify({"pixels": pixels.data}), 200
@@ -86,8 +76,8 @@ def set_pixel():
     return jsonify({"message": "The pixel is set!"}), 200
 
 @app.route('/', methods=['GET'])
-def home():
-    return jsonify({"message": "Service is running"}), 200
+def documentation():
+    return send_file('docsserver.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
