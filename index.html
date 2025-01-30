@@ -56,7 +56,9 @@
         let status = document.getElementById('status');
 
         function updateImage() {
-            image.src = "https://thepixelsapi.onrender.com/image";
+            // force update
+            const timestamp = new Date().getTime();
+            image.src = `https://thepixelsapi.onrender.com/image?t=${timestamp}`;
             fetch('https://thepixelsapi.onrender.com')
                 .then(response => {
                     status.style.color = "#349712";
@@ -74,7 +76,7 @@
             window.open("documentation", "_blank");
         }
 
-        setInterval(updateImage(), 10000);
+        setInterval(updateImage, 10000);
     </script>
 </body>
 </html>
